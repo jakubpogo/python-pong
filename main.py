@@ -14,6 +14,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 
 PADDLE_WIDTH, PADDLE_HEIGHT =  20, 100
+ball_radius = 7
 
 class Paddle:
     COLOR = white
@@ -34,7 +35,25 @@ class Paddle:
         else:
             self.y += self.VEL
 
-def draw(win, paddles):
+class Ball:
+    max_vel = 5
+    color = white
+
+    def __init__(self, x, y, radius):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.x_vel = self.max_vel
+        self.y_vel = 0
+
+    def draw(self, win):
+        pygame.draw.circle(win, self.color, (self.x,self.y),self.radius, )
+
+    def move(self):
+        self.x += self.x_vel
+        self.y += self.y_vel
+
+def draw(win, paddles, ball):
     win.fill(black)
 
     for paddle in paddles:
@@ -45,6 +64,7 @@ def draw(win, paddles):
             continue
         pygame.draw.rect(win, white, (width//2 - 5, i, 10, height//20))
 
+    ball.draw(win)
     pygame.display.update()
 
 def handle_paddle_movement(keys, left_paddle, right_paddle):
@@ -64,10 +84,11 @@ def main():
 
     left_paddle = Paddle(10, height//2 - PADDLE_HEIGHT//2, PADDLE_WIDTH, PADDLE_HEIGHT)
     right_paddle = Paddle(width - 10 - PADDLE_WIDTH, height//2 - PADDLE_HEIGHT//2, PADDLE_WIDTH, PADDLE_HEIGHT)
+    ball = Ball(width // 2, height // 2, ball_radius)
 
     while run:
         clock.tick(FPS)
-        draw(screen, [left_paddle, right_paddle])
+        draw(screen, [left_paddle, right_paddle], ball)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
