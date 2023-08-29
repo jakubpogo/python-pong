@@ -4,7 +4,10 @@ pygame.init()
 
 #set up the display
 
+
 width, height = 700, 500
+
+
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong")
 
@@ -12,6 +15,7 @@ FPS = 60
 
 white = (255, 255, 255)
 black = (0, 0, 0)
+
 
 PADDLE_WIDTH, PADDLE_HEIGHT =  20, 100
 
@@ -62,6 +66,7 @@ def main():
     run = True
     clock = pygame.time.Clock()
 
+
     left_paddle = Paddle(10, height//2 - PADDLE_HEIGHT//2, PADDLE_WIDTH, PADDLE_HEIGHT)
     right_paddle = Paddle(width - 10 - PADDLE_WIDTH, height//2 - PADDLE_HEIGHT//2, PADDLE_WIDTH, PADDLE_HEIGHT)
 
@@ -69,10 +74,12 @@ def main():
         clock.tick(FPS)
         draw(screen, [left_paddle, right_paddle])
 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
+
 
         keys = pygame.key.get_pressed()
         handle_paddle_movement(keys, left_paddle,right_paddle)
